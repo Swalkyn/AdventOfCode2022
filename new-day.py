@@ -24,7 +24,7 @@ with open(src_dir + f"day{day}.worksheet.sc", 'w') as src_file:
             input_file.write(pyperclip.paste())
             imports = "import scala.io.Source"
             input_path = res_dir + "input.txt"
-            code = f'val input = Source.fromFile("{input_path}").getLines().toList\n\ninput\n'
+            code = f'val input = Source.fromFile("{input_path}").getLines().toSeq\n\ninput\n'
             src_file.write(f"{imports}\n\n{code}")
     else:
         src_file.write("\n")
