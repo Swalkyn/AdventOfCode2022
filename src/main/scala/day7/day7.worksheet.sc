@@ -13,6 +13,9 @@ val filePattern = "(\\d+) .+".r
 val dirPattern = "dir (.+)".r
 val cmdPattern = "\\$ (cd|ls) ?(.+)?".r
 
+/* Actually building the file system tree is hard and unecessary.
+ * With some assumptions, paths -> size is simpler
+ */
 
 def parseFileSystem(terminal: List[String]): Dir =
   val root: Dir = Dir("/", None, List())
