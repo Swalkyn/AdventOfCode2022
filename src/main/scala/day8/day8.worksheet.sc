@@ -1,31 +1,50 @@
 import scala.io.Source
 
+type Coord = (Int, Int)
+
 val input = Source.fromFile("src/main/resources/day8/input.txt").getLines().toSeq
-val testInput = """30373,25512,65332,33549,35390""".trim.split(",").toSeq
+// val input = """30373,25512,65332,33549,35390""".trim.split(",").toSeq
 
-val grid = input.map(_.map(_.asDigit).toSeq)
+val grid: Map[Coord, Int] = input
+  .map(_.map(_.asDigit).toSeq)
+  .zipWithIndex
+  .flatMap((row, i) => row.zipWithIndex.map((h, j) => (j, i) -> h))
+  .toMap
+val width = input.head.size
+val height = input.size
 
-val horizontally = grid.zipWithIndex.flatMap((row, i) =>
-  val indexedRow = row.zipWithIndex
-  val visibleFromLeft = indexedRow.foldLeft(-1, List[(Int, Int)]()) {
-    case ((max, acc), (h, j)) => if h > max then (h, (i, j) :: acc) else (max, acc)
-  }._2
-  val visibleFromRight = indexedRow.foldRight(-1, List[(Int, Int)]()) {
-    case ((h, j), (max, acc)) => if h > max then (h, (i, j) :: acc) else (max, acc)
-  }._2
-  visibleFromRight ++ visibleFromLeft
-  )
+assert(width == height)
+val n = width
 
-val vertically = grid.transpose.zipWithIndex.flatMap((row, j) =>
-  val indexedRow = row.zipWithIndex
-  val visibleFromLeft = indexedRow.foldLeft(-1, List[(Int, Int)]()) {
-    case ((max, acc), (h, i)) => if h > max then (h, (i, j) :: acc) else (max, acc)
+// Part 1
+val range = (0 until n)
+range.flatMap(i =>
+  range.foldLeft(-1, Set[(Int, Int)]()) {
+    case ((max, acc), j) => if grid(i, j) > max then (grid(i, j), acc incl (i, j)) else (max, acc)
+  }._2 ++
+  range.foldRight(-1, Set[(Int, Int)]()) {
+    case (j, (max, acc)) => if grid(i, j) > max then (grid(i, j), acc incl (i, j)) else (max, acc)
+  }._2 ++
+  range.foldLeft(-1, Set[(Int, Int)]()) {
+    case ((max, acc), j) => if grid(j, i) > max then (grid(j, i), acc incl (j, i)) else (max, acc)
+  }._2 ++
+  range.foldRight(-1, Set[(Int, Int)]()) {
+    case (j, (max, acc)) => if grid(j, i) > max then (grid(j, i), acc incl (j, i)) else (max, acc)
   }._2
-  val visibleFromRight = indexedRow.foldRight(-1, List[(Int, Int)]()) {
-    case ((h, i), (max, acc)) => if h > max then (h, (i, j) :: acc) else (max, acc)
-  }._2
-  visibleFromRight ++ visibleFromLeft
-  )
+).toSet.size
 
-(horizontally ++ vertically).toSet.size
+def scenicScore(c: Coord) =
+  val (x, y) = c
+  val h = grid(x, y)
+  if (x == 0 || x == width-1 || y == 0 || y == height-1) then
+    0
+  else
+    val right = LazyList.range(x+1, width-1, 1).map(x => grid(x, y)).takeWhile(_ < h).size + 1
+    val left = LazyList.range(x-1, 0, -1).map(x => grid(x, y)).takeWhile(_ < h).size + 1
+    val up = LazyList.range(y+1, height-1, 1).map(y => grid(x, y)).takeWhile(_ < h).size + 1
+    val down = LazyList.range(y-1, 0, -1).map(y => grid(x, y)).takeWhile(_ < h).size + 1
+    right * left * up * down
+
+// Part 2
+grid.keys.map(scenicScore).max
 
