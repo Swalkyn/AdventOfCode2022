@@ -1,6 +1,10 @@
 import scala.io.Source
 import scala.collection.mutable.Queue
 
+// Not too happy with this solution. It works and is fast,
+// but is not totally pure. Also not the easiest to read.
+// Better solution: https://github.com/maneatingape/advent-of-code/blob/main/src/main/scala/AdventOfCode2022/Day11.scala
+
 class Monkey(
   val index: Int,
   val items: Queue[Long],
