@@ -1,5 +1,4 @@
 import scala.io.Source
-import scala.annotation.tailrec
 
 // Black magic necessary to define recursive types
 type Rec[F[_], A] = A match {
@@ -23,16 +22,15 @@ def parse(s: String): Packet =
 
 extension (l: Value)
   infix def <(r: Value): Boolean = (l, r) match
-    case (l: Int, r: Int) => l < r
-    case (Nil, Nil) => false
     case (_, Nil) => false
     case (Nil, _) => true
+    case (l: Int, r: Int) => l < r
+    case (l: Int, r) => List(l) < r
+    case (l, r: Int) => l < List(r)
     case (lh :: lt, rh :: rt) =>
       if lh < rh then true
       else if rh < lh then false
       else lt < rt
-    case (l: Int, r: List[Value]) => List(l) < r
-    case (l: List[Value], r: Int) => l < List(r)
  
 val input = Source.fromFile("src/main/resources/day13/input.txt").getLines().toSeq
 val packets = input.filter(!_.isEmpty).map(parse)
