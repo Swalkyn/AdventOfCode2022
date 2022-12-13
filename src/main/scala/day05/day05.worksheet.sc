@@ -1,6 +1,6 @@
 import scala.io.Source
 
-val input = Source.fromFile("src/main/resources/day5/input.txt").getLines().toSeq
+val input = Source.fromFile("src/main/resources/day05/input.txt").getLines().toSeq
 val stepPattern = "move (\\d+) from (\\d+) to (\\d+)".r
 
 val (numberedLayout, stepsWithBlank) = input.span(!_.isEmpty)

@@ -24,7 +24,7 @@ object Day2 extends App:
     val beats = Paper 
     val loses = Rock
 
-  val input = Source.fromFile("src/main/resources/day2/input.txt").getLines().toList
+  val input = Source.fromFile("src/main/resources/day02/input.txt").getLines().toList
 
   val pattern = "(.) (.)".r
 

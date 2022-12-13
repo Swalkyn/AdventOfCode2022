@@ -1,6 +1,6 @@
 import scala.io.Source
 
-val input = Source.fromFile("src/main/resources/day3/input.txt").getLines().toList
+val input = Source.fromFile("src/main/resources/day03/input.txt").getLines().toList
 
 def commonItems(rucksack: String): Set[Char] =
   val (compA, compB) = rucksack.splitAt(rucksack.size / 2)

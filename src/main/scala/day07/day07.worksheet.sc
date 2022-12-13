@@ -7,7 +7,7 @@ case class Dir(name: String, parent: Option[Dir], var elems: List[FSElem]) exten
   lazy val size = elems.map(_.size).sum
   override def toString = s"Dir($name, ${parent.map(_.name).getOrElse("")}, ${elems})"
 
-val input = Source.fromFile("src/main/resources/day7/input.txt").getLines().toList
+val input = Source.fromFile("src/main/resources/day07/input.txt").getLines().toList
 
 val filePattern = "(\\d+) .+".r
 val dirPattern = "dir (.+)".r

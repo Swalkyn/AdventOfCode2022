@@ -13,8 +13,8 @@ args = parser.parse_args()
 
 day = datetime.date.today().day if args.day == None else args.day
 
-src_dir = f"src/main/scala/day{day}/"
-res_dir = f"src/main/resources/day{day}/"
+src_dir = f"src/main/scala/day{day:02}/"
+res_dir = f"src/main/resources/day{day:02}/"
 
 os.makedirs(src_dir)
 with open(src_dir + f"day{day}.worksheet.sc", 'w') as src_file:

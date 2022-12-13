@@ -1,6 +1,7 @@
 import scala.io.Source
 
-val input = Source.fromFile("src/main/resources/day6/input.txt").getLines().toSeq
+
+val input = Source.fromFile("src/main/resources/day06/input.txt").getLines().toSeq
 
 // Fast to write, slightly inefficient soltion
 def findFirstNDistinct(s: String, n: Int) =

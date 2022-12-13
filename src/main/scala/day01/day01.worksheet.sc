@@ -1,7 +1,7 @@
 import scala.math.Ordering
 import scala.io.Source
 
-val input = Source.fromFile("src/main/resources/day1/input.txt").getLines().toList
+val input = Source.fromFile("src/main/resources/day01/input.txt").getLines().toList
 
 val totalByElf = input.map(_.toIntOption).foldRight((0, List[Int]())) {
   case (Some(cal), (current, acc))  => (current + cal, acc)

@@ -2,7 +2,7 @@ import scala.io.Source
 
 type Coord = (Int, Int)
 
-val input = Source.fromFile("src/main/resources/day8/input.txt").getLines().toSeq
+val input = Source.fromFile("src/main/resources/day08/input.txt").getLines().toSeq
 // val input = """30373,25512,65332,33549,35390""".trim.split(",").toSeq
 
 val grid: Map[Coord, Int] = input

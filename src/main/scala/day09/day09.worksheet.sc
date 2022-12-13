@@ -3,7 +3,7 @@ import scala.io.Source
 type Rope = List[Coord]
 
 // val input = "R 4,U 4,L 3,D 1,R 4,D 1,L 5,R 2".split(",").toSeq
-val input = Source.fromFile("src/main/resources/day9/input.txt").getLines().toSeq
+val input = Source.fromFile("src/main/resources/day09/input.txt").getLines().toSeq
 
 sealed trait Direction { def incr: Coord }
 case object U extends Direction { val incr = Coord(0, 1) }

@@ -1,6 +1,6 @@
 import scala.io.Source
 
-val input = Source.fromFile("src/main/resources/day4/input.txt").getLines().toList
+val input = Source.fromFile("src/main/resources/day04/input.txt").getLines().toList
 val pattern = "(\\d+)-(\\d+),(\\d+)-(\\d+),?".r
 
 def extractRanges(s: String): (Range, Range) =
