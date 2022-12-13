@@ -27,8 +27,8 @@ val grid2 = grid
   .updated(end, 'z')
   .view.mapValues(c => c.toInt - 'a'.toInt)
 
-def shortestPath(from: Coord, to: Coord): Int =
-  val distances = mutable.Map[Coord, Int]().withDefaultValue(Integer.MAX_VALUE)
+def shortestPath(from: Coord, to: Coord => Boolean, canMove: (Coord, Coord) => Boolean): Map[Coord, Int] =
+  val distances = mutable.Map[Coord, Int]().withDefaultValue(10000)
   val unexplored = mutable.Set[Coord]().addAll(grid.keys)
   distances(from) = 0
 
@@ -38,14 +38,15 @@ def shortestPath(from: Coord, to: Coord): Int =
 
     List(U, D, L, R)
       .map(_.incr + u)
-      .filter(v => grid2.get(v).filter(_ - grid2(u) <= 1).isDefined && unexplored.contains(v))
+      .filter(v => grid2.contains(v) && canMove(u, v) && unexplored.contains(v))
       .foreach(neighbour =>
         val dist = distances(u) + 1
         if dist < distances(neighbour) then
           distances(neighbour) = dist
       )
-  distances(to)
+  distances.filter((c, _) => to(c)).toMap
 
-shortestPath(start, end)
+shortestPath(start, c => c == end, (u, v) => grid2(v) - grid2(u) <= 1).head
+shortestPath(end, c => grid2(c) == 0, (u, v) => grid2(u) - grid2(v) <= 1).minBy(_._2)
 
 
